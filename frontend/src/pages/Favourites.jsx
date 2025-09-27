@@ -1,42 +1,58 @@
-// FavoritesPage.jsx
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BsStopwatchFill } from "react-icons/bs";
-// import { FaHeart } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import axios from 'axios';
 
 const Favourites = () => {
   const [favRecipes, setFavRecipes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedFavRecipes = JSON.parse(localStorage.getItem("fav")) ?? [];
+    const savedFavRecipes = JSON.parse(localStorage.getItem("fav")) || [];
     setFavRecipes(savedFavRecipes);
   }, []);
 
-  const onDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/recipe/${id}`)
-      .then((res) => console.log(res));
-
-    // Remove deleted recipe from localStorage
-    const updatedFavRecipes = favRecipes.filter(recipe => recipe._id !== id);
-    setFavRecipes(updatedFavRecipes);
-    localStorage.setItem("fav", JSON.stringify(updatedFavRecipes));
+  const onDelete = async (id, e) => {
+    e.stopPropagation()
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      try {
+        await axios.delete(`http://localhost:5000/recipe/${id}`)
+        const updatedFavRecipes = favRecipes.filter(recipe => recipe._id !== id);
+        setFavRecipes(updatedFavRecipes);
+        localStorage.setItem("fav", JSON.stringify(updatedFavRecipes));
+      } catch (error) {
+        console.error("Error deleting recipe:", error);
+        alert("Failed to delete recipe");
+      }
+    }
   };
+
+  const handleCardClick = (recipeId) => {
+    navigate(`/view-recipe/${recipeId}`)
+  }
 
   return (
     <div className="card-container">
       {favRecipes.length === 0 ? (
-        <p>No favorite recipes yet.</p>
+        <div className="no-favorites">
+          <h2>No favorite recipes yet</h2>
+          <p>Start adding recipes to your favorites to see them here!</p>
+        </div>
       ) : (
         favRecipes.map((recipe) => (
-          <div key={recipe._id} className="card">
+          <div 
+            key={recipe._id} 
+            className="card recipe-card"
+            onClick={() => handleCardClick(recipe._id)}
+          >
             <img
               src={`http://localhost:5000/images/${recipe.coverImage}`}
               width="207px"
               height="150px"
               alt={recipe.title}
+              style={{objectFit: 'cover'}}
             />
             <div className="card-body">
               <div className="title">{recipe.title}</div>
@@ -45,10 +61,19 @@ const Favourites = () => {
                   <BsStopwatchFill /> {recipe.time}
                 </div>
                 <div className="action">
-                  <Link to={`/EditRecipe/${recipe._id}`} className="editIcon">
+                  <button 
+                    className="editIcon" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/edit-recipe/${recipe._id}`);
+                    }}
+                  >
                     <FaEdit />
-                  </Link>
-                  <MdDelete onClick={() => onDelete(recipe._id)} className="deleteIcon" />
+                  </button>
+                  <MdDelete 
+                    onClick={(e) => onDelete(recipe._id, e)} 
+                    className="deleteIcon" 
+                  />
                 </div>
               </div>
             </div>
@@ -60,4 +85,3 @@ const Favourites = () => {
 };
 
 export default Favourites;
-

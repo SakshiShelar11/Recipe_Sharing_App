@@ -1,53 +1,62 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-// import RecipeItems from "./components/RecipeItems";
-import AddRecipe from "./pages/AddRecipe"
+import AddRecipe from "./pages/AddRecipe";
 import MainNavigation from "./components/MainNavigation";
-// import { getRecipes } from "./api/getRecipes";
-import './App.css'
 import EditRecipe from "./pages/EditRecipe";
 import Favourites from "./pages/Favourites";
-
 import About from "./pages/About";
-// import axios from "axios";
-
-
-
+import ViewRecipe from "./pages/ViewRecipe"; 
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is logged in
-    const user = localStorage.getItem("username");
-    setIsLoggedIn(!!user);
+    const username = localStorage.getItem("username");
+    if (username) {
+      setIsLoggedIn(true);
+      setUser(username);
+    }
   }, []);
-  
+
+  const handleLogin = (username) => {
+    localStorage.setItem("username", username);
+    setIsLoggedIn(true);
+    setUser(username);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    setIsLoggedIn(false);
+    setUser(null);
+  };
 
   return (
     <Router>
-      <MainNavigation setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
-      <Routes>
-
-      <Route path="/" element={<Navigate to="/home" /> }/>
-        
-        <Route path="/home" element={<Home /> } />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/AddRecipe" element={<AddRecipe setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/EditRecipe/:id" element={<EditRecipe setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/Favourites" element={<Favourites setIsLoggedIn={setIsLoggedIn}/>} />
-        
-        <Route path="/About" element={<About />} />
-        
-      </Routes>
+      <MainNavigation 
+        isLoggedIn={isLoggedIn} 
+        user={user} 
+        onLogout={handleLogout} 
+      />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home isLoggedIn={isLoggedIn} />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/register" element={<Register onRegister={handleLogin} />} />
+          <Route path="/add-recipe" element={isLoggedIn ? <AddRecipe /> : <Navigate to="/login" />} />
+          <Route path="/edit-recipe/:id" element={isLoggedIn ? <EditRecipe /> : <Navigate to="/login" />} />
+          <Route path="/view-recipe/:id" element={<ViewRecipe />} /> {/* Add this route */}
+          <Route path="/favourites" element={isLoggedIn ? <Favourites /> : <Navigate to="/login" />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </main>
     </Router>
   );
 }
 
 export default App;
-     

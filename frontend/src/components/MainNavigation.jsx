@@ -1,18 +1,12 @@
 import React from 'react'
 import Navbar from './Navbar'
 import { Outlet } from 'react-router-dom'
-// import Footer from './Footer'
 
-
-
-export default function MainNavigation() {
+export default function MainNavigation({ isLoggedIn, user, onLogout }) {
   return (
     <>
-    <Navbar/>
-     
-     <Outlet/>
-    
-    
+      <Navbar isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
+      <Outlet />
     </>
   )
 }

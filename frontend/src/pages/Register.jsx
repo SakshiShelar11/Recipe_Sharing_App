@@ -1,45 +1,113 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "../App.css"; 
-import img2 from '../Images/img2.jpg' 
-
+import "./Auth.css";
+import img2 from '../Images/img2.jpg';
 import Footer from "../components/Footer";
 
-const Register = ({ setIsLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Register = ({ onRegister }) => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    await axios.post("http://localhost:5000/register", { username, email, password });
-    localStorage.setItem("username", username);
-    setIsLoggedIn(true);
-    navigate("/home");
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await axios.post("http://localhost:5000/register", formData);
+      onRegister(res.data.username); 
+      navigate("/home");
+    } catch (error) {
+      setError(error.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-
-    <div className="register">
-
-      <div className="imgs">
-
-         <img src={img2} width="100%" alt="register" style={{ width: "100%", height: "100%"}}></img>
-
-         <div className="register_content" style={{backgroundColor:'#F1F1F1', padding:"5rem"}}>
-
-      <h1>Register</h1><br/>
-      <input type="text" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)} /><br/>
-      <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} /><br/>
-      <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} /><br/>
-      <button onClick={handleRegister}>Register</button><br/>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+      <div className="auth-container">
+        <div className="auth-image-section">
+          <img src={img2} alt="Cooking" />
+          <div className="auth-overlay">
+            <h2>Join Our Community!</h2>
+            <p>Sign up to start sharing your culinary creations</p>
+          </div>
+        </div>
+        
+        <div className="auth-form-section">
+          <div className="auth-form-container">
+            <h1>Sign Up</h1>
+            <p className="auth-subtitle">Create your account to get started</p>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your username"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your email"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your password"
+                />
+              </div>
+              
+              <button type="submit" disabled={loading} className="auth-button">
+                {loading ? 'Creating Account...' : 'Sign Up'}
+              </button>
+            </form>
+            
+            <p className="auth-switch">
+              Already have an account? <Link to="/login">Sign in here</Link>
+            </p>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
-    <Footer/>
+      <Footer/>
     </>
   );
 };
