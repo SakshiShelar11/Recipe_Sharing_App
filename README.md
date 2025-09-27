@@ -5,11 +5,6 @@ Connect with food enthusiasts, share your culinary creations, and explore delici
 
 ---
 
-## 🚀 Live Demo  
-🔗 [Live Application](#) | 📱 *Mobile Responsive* | 🎨 *Modern UI*  
-
----
-
 ## ✨ Features  
 
 ### 🔐 Authentication System  
