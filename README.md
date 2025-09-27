@@ -1,134 +1,91 @@
-🍳 Kitchen Tales - Recipe Sharing Platform
-A full-stack MERN application for sharing, discovering, and managing recipes. Connect with food enthusiasts, share your culinary creations, and explore delicious recipes from around the world.
+# 🍳 Kitchen Tales - Recipe Sharing Platform  
 
-🚀 Live Demo
-🔗 Live Application Link | [📱 Mobile Responsive] | [🎨 Modern UI]
+A **full-stack MERN application** for sharing, discovering, and managing recipes.  
+Connect with food enthusiasts, share your culinary creations, and explore delicious recipes from around the world.  
 
-✨ Features
-🔐 Authentication System
-User Registration & Login with secure password hashing
+---
 
-JWT-based authentication for secure sessions
+## 🚀 Live Demo  
+🔗 [Live Application](#) | 📱 *Mobile Responsive* | 🎨 *Modern UI*  
 
-Protected routes for authenticated users only
+---
 
-Session persistence across browser refreshes
+## ✨ Features  
 
-📝 Recipe Management
-Create Recipes with title, ingredients, instructions, and cooking time
+### 🔐 Authentication System  
+- Secure **User Registration & Login** with password hashing  
+- **JWT-based authentication** for secure sessions  
+- **Protected routes** (only accessible to logged-in users)  
+- **Session persistence** across browser refreshes  
 
-Upload Recipe Images with support for multiple image formats
+### 📝 Recipe Management  
+- **Create Recipes** with title, ingredients, instructions, and cooking time  
+- **Upload Images** (supports multiple formats)  
+- **Edit & Update Recipes** in real-time  
+- **Delete Recipes** with confirmation dialogs  
+- **View Full Recipe Details** in a beautiful layout  
 
-Edit Recipes with real-time updates
+### ❤️ Favorites System  
+- Add or remove recipes from favorites  
+- **Persistent favorites** using Local Storage  
+- Dedicated **Favorites Page**  
+- Quick access to saved recipes  
 
-Delete Recipes with confirmation dialogs
+### 🔍 Advanced Search  
+- Search by **recipe name** (real-time results)  
+- Search by **ingredients** with partial matching  
+- **Case-insensitive search** for better UX  
+- Instant results as you type  
 
-View Full Recipe Details with beautiful layout
+### 📱 Responsive Design  
+- **Mobile-first** layouts for all devices  
+- Optimized for **tablets & desktops**  
+- **Touch-friendly** UI elements  
+- Cross-browser compatibility  
 
-❤️ Favorites System
-Add/Remove Recipes from favorites
+### 🎨 User Experience  
+- Modern, **intuitive UI/UX**  
+- **Loading states** and proper error handling  
+- Optimized images for fast loading  
+- Smooth **animations & transitions**  
 
-Local Storage Integration for persistent favorites
+---
 
-Favorites Page to view all saved recipes
+## 🛠️ Technology Stack  
 
-Quick Access to favorite recipes
+### Frontend  
+- ⚛️ React.js – Component-based UI library  
+- 🔀 React Router – Client-side routing  
+- 📡 Axios – API calls  
+- 🎨 CSS3 – Flexbox & Grid layouts  
+- 🔔 React Icons – Icon library  
 
-🔍 Advanced Search
-Search by Recipe Name with real-time results
+### Backend  
+- 🌐 Node.js – Runtime environment  
+- 🚀 Express.js – Web framework  
+- 🗄️ MongoDB – NoSQL database  
+- 🛠️ Mongoose – Object modeling  
+- 🔑 JWT – Authentication  
+- 🔒 bcryptjs – Password hashing  
+- 📂 Multer – File upload handling  
+- 🔓 CORS – Cross-origin access  
 
-Search by Ingredients with partial matching
+### Development Tools  
+- 💻 VS Code – Code editor  
+- 🧪 Postman – API testing  
+- 🔄 Nodemon – Dev server restart  
+- 🗃️ Git & GitHub – Version control  
 
-Case-insensitive search for better user experience
+---
 
-Instant results as you type
+## 📦 Installation & Setup  
 
-📱 Responsive Design
-Mobile-First Approach for all devices
+### Prerequisites  
+- [Node.js](https://nodejs.org/) (v14 or higher)  
+- [MongoDB](https://www.mongodb.com/) (local or Atlas)  
+- Git  
 
-Tablet & Desktop Optimized layouts
-
-Touch-friendly interface elements
-
-Cross-browser compatibility
-
-🎨 User Experience
-Modern UI/UX Design with intuitive navigation
-
-Loading States and error handling
-
-Image Optimization for fast loading
-
-Smooth Animations and transitions
-
-🛠️ Technology Stack
-Frontend
-React.js - Component-based UI library
-
-React Router - Client-side routing
-
-Axios - HTTP client for API calls
-
-React Icons - Beautiful icon library
-
-CSS3 - Custom styling with Flexbox/Grid
-
-Backend
-Node.js - Runtime environment
-
-Express.js - Web application framework
-
-MongoDB - NoSQL database
-
-Mongoose - MongoDB object modeling
-
-JWT - JSON Web Tokens for authentication
-
-bcryptjs - Password hashing
-
-Multer - File upload handling
-
-CORS - Cross-origin resource sharing
-
-Development Tools
-VS Code - Code editor
-
-Postman - API testing
-
-Git & GitHub - Version control
-
-Nodemon - Development server restart
-
-📦 Installation & Setup
-Prerequisites
-Node.js (v14 or higher)
-
-MongoDB (local or Atlas)
-
-Git
-
-For Users
-Register/Login to your account
-
-Browse Recipes on the home page
-
-Search for specific recipes or ingredients
-
-Click on any recipe to view full details
-
-Add recipes to favorites for quick access
-
-Share your own recipes using the "Add Recipe" feature
-
-For Developers
-The application follows React best practices with:
-
-Component-based architecture
-
-State management using React hooks
-
-API integration with error handling
-
-Responsive CSS design
-
-Clean code structure
+### Clone the Repository  
+```bash
+git clone https://github.com/SakshiShelar11/Recipe_Sharing_App.git
+cd Recipe_Sharing_App
